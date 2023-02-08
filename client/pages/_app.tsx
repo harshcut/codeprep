@@ -1,6 +1,15 @@
 import Head from 'next/head'
 import { SessionProvider } from 'next-auth/react'
+import { Inter } from '@next/font/google'
 import type { AppProps } from 'next/app'
+
+import 'tailwindcss/tailwind.css'
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+})
 
 export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
@@ -14,6 +23,11 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
       <SessionProvider session={session}>
         <Component {...pageProps} />
       </SessionProvider>
+      <style jsx global>{`
+        :root {
+          --font-inter: ${inter.style.fontFamily};
+        }
+      `}</style>
     </>
   )
 }
