@@ -725,6 +725,11 @@ chownr@^2.0.0:
   resolved "https://registry.yarnpkg.com/chownr/-/chownr-2.0.0.tgz#15bfbe53d2eab4cf70f18a8cd68ebe5b3cb1dece"
   integrity sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==
 
+class-variance-authority@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/class-variance-authority/-/class-variance-authority-0.4.0.tgz#2ff1b5a836a68ce7a2dac0cc12f6fdc50e47f666"
+  integrity sha512-74enNN8O9ZNieycac/y8FxqgyzZhZbxmCitAtAeUrLPlxjSd5zA7LfpprmxEcOmQBnaGs5hYhiSGnJ0mqrtBLQ==
+
 client-only@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/client-only/-/client-only-0.0.1.tgz#38bba5d403c41ab150bff64a95c85013cf73bca1"
@@ -1903,6 +1908,11 @@ lru-cache@^6.0.0:
   integrity sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==
   dependencies:
     yallist "^4.0.0"
+
+lucide-react@^0.114.0:
+  version "0.114.0"
+  resolved "https://registry.yarnpkg.com/lucide-react/-/lucide-react-0.114.0.tgz#60d1f40f76c0a1a0968181f8a3978cfd19430647"
+  integrity sha512-q+KzNGjFINMim7inE4jcTfgDMhXTOjzthHes4UaYoS7hyYcQl79f2KrdKoj5Z/Uuc0A6yt7JQ0R1w6I+tPDhsg==
 
 make-dir@^3.1.0:
   version "3.1.0"

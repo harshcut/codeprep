@@ -16,11 +16,13 @@
     "@uiw/react-codemirror": "^4.19.9",
     "bcrypt": "^5.1.0",
     "clsx": "^1.2.1",
+    "lucide-react": "^0.114.0",
     "next": "^13.1.6",
     "next-auth": "^4.19.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "tailwind-merge": "^1.9.1"
+    "tailwind-merge": "^1.9.1",
+    "ui": "*"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",

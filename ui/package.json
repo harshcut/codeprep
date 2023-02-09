@@ -1,0 +1,15 @@
+{
+  "name": "ui",
+  "version": "1.0.0",
+  "private": true,
+  "main": "src/index.ts",
+  "dependencies": {
+    "class-variance-authority": "^0.4.0",
+    "clsx": "^1.2.1",
+    "react": "^18.2.0",
+    "tailwind-merge": "^1.9.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.9.5"
+  }
+}
