@@ -4,6 +4,7 @@
   "private": true,
   "main": "src/index.ts",
   "dependencies": {
+    "@radix-ui/react-label": "^2.0.0",
     "class-variance-authority": "^0.4.0",
     "clsx": "^1.2.1",
     "react": "^18.2.0",
