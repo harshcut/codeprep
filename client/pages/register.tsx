@@ -1,13 +1,13 @@
 import { useRouter } from 'next/router'
 import { Input, Label, Button } from 'ui'
 
-export default function Home() {
+export default function Register() {
   const router = useRouter()
 
   return (
     <div className="grid place-items-center min-h-screen">
       <main className="grid gap-6 w-full max-w-[400px] p-4">
-        <h1 className="text-3xl font-extrabold tracking-tight">Login to Code Prep</h1>
+        <h1 className="text-3xl font-extrabold tracking-tight">Register for Code Prep</h1>
         <form className="grid gap-5">
           <div className="grid gap-1.5">
             <Label htmlFor="email">Email</Label>
@@ -17,12 +17,16 @@ export default function Home() {
             <Label htmlFor="password">Password</Label>
             <Input type="password" id="password" placeholder="••••••••••••" />
           </div>
-          <Button type="submit">Login</Button>
+          <div className="grid gap-1.5">
+            <Label htmlFor="confirm_password">Confirm Password</Label>
+            <Input type="password" id="confirm_password" placeholder="••••••••••••" />
+          </div>
+          <Button type="submit">Sign Up</Button>
         </form>
         <div className="grid gap-1.5">
-          <p className="text-sm text-slate-500 dark:text-slate-400">Don&apos;t have an account?</p>
-          <Button variant="outline" type="button" onClick={() => router.push('/register')}>
-            Sign Up
+          <p className="text-sm text-slate-500 dark:text-slate-400">Already have an account?</p>
+          <Button variant="outline" type="button" onClick={() => router.push('/')}>
+            Login
           </Button>
         </div>
       </main>
