@@ -4,7 +4,7 @@ import prisma from '@/prisma'
 import { compare } from 'bcrypt'
 import type { AuthOptions } from 'next-auth'
 
-const authOptions: AuthOptions = {
+export const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
       name: 'Credentials',
@@ -22,6 +22,9 @@ const authOptions: AuthOptions = {
       },
     }),
   ],
+  pages: {
+    signIn: '/',
+  },
 }
 
 export default NextAuth(authOptions)

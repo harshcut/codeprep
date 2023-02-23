@@ -1,6 +1,10 @@
+import * as React from 'react'
 import { useRouter } from 'next/router'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { Input, Label, Button } from 'ui'
+import { getServerSession } from 'next-auth/next'
+import { Input, Label, Button, useToast } from 'ui'
+import { authOptions } from './api/auth/[...nextauth]'
+import type { GetServerSideProps } from 'next'
 
 interface FormValues {
   email: string
@@ -11,14 +15,25 @@ interface FormValues {
 export default function Register() {
   const router = useRouter()
   const { register, handleSubmit, watch } = useForm<FormValues>()
+  const { setToast } = useToast()
+  const [loading, setLoading] = React.useState(false)
 
   const onSubmit: SubmitHandler<FormValues> = async ({ email, password }) => {
-    const data = await fetch('/api/auth/register', {
+    setLoading(true)
+    const { data, error } = await fetch('/api/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
     }).then((res) => res.json())
-    console.log(data)
+    if (!data) {
+      setToast({
+        title: 'Uh oh! Something went wrong.',
+        description: `${error}. Try again with different credentials.`,
+        variant: 'destructive',
+      })
+      return setLoading(false)
+    }
+    router.push('/me/dashboard')
   }
 
   return (
@@ -56,7 +71,9 @@ export default function Register() {
               placeholder="••••••••••••"
             />
           </div>
-          <Button type="submit">Sign Up</Button>
+          <Button type="submit" disabled={loading}>
+            Sign Up
+          </Button>
         </form>
         <div className="grid gap-1.5">
           <p className="text-sm text-slate-500 dark:text-slate-400">Already have an account?</p>
@@ -67,4 +84,12 @@ export default function Register() {
       </main>
     </div>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const session = await getServerSession(ctx.req, ctx.res, authOptions)
+  if (session) {
+    return { redirect: { destination: '/me/dashboard', permanent: false } }
+  }
+  return { props: {} }
 }
