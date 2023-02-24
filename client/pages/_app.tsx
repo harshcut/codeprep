@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { SessionProvider } from 'next-auth/react'
-import { Inter } from '@next/font/google'
+import { Inter } from 'next/font/google'
 import { Toast } from 'ui'
 import type { AppProps } from 'next/app'
 
