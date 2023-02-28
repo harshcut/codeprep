@@ -5,6 +5,9 @@ const nextConfig = {
     return [{ source: '/me', destination: '/me/dashboard', permanent: true }]
   },
   transpilePackages: ['ui'],
+  experimental: {
+    appDir: true,
+  },
 }
 
 module.exports = nextConfig
