@@ -40,6 +40,7 @@ export default function LoginForm() {
           {...register('email', { required: true })}
           id="email"
           placeholder="me@mail.com"
+          readOnly={loading}
         />
       </div>
       <div className="grid gap-1.5">
@@ -49,6 +50,7 @@ export default function LoginForm() {
           {...register('password', { required: true })}
           id="password"
           placeholder="••••••••••••"
+          readOnly={loading}
         />
       </div>
       <Button type="submit" disabled={loading}>

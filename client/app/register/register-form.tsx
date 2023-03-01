@@ -2,6 +2,7 @@
 
 import * as React from 'react'
 import { useRouter } from 'next/navigation'
+import { signIn } from 'next-auth/react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { Input, Label, Button, useToast } from 'ui'
 
@@ -32,6 +33,15 @@ export default function RegisterForm() {
       })
       return setLoading(false)
     }
+    const res = await signIn('credentials', { email, password, redirect: false })
+    if (!res?.ok) {
+      setToast({
+        title: 'Uh oh! Something went wrong.',
+        description: 'There was a problem logging you in. Try again after some time.',
+        variant: 'destructive',
+      })
+      return setLoading(false)
+    }
     router.push('/me/dashboard')
   }
 
@@ -44,6 +54,7 @@ export default function RegisterForm() {
           {...register('email', { required: true })}
           id="email"
           placeholder="me@mail.com"
+          readOnly={loading}
         />
       </div>
       <div className="grid gap-1.5">
@@ -53,6 +64,7 @@ export default function RegisterForm() {
           {...register('password', { required: true })}
           id="password"
           placeholder="••••••••••••"
+          readOnly={loading}
         />
       </div>
       <div className="grid gap-1.5">
@@ -62,6 +74,7 @@ export default function RegisterForm() {
           {...register('confirm', { required: true, validate: (v) => v === watch('password') })}
           id="confirm"
           placeholder="••••••••••••"
+          readOnly={loading}
         />
       </div>
       <Button type="submit" disabled={loading}>
