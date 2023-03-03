@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import Image from 'next/image'
 import { useSession, signOut } from 'next-auth/react'
 import { LogOut, Settings, User, Plus, UserPlus } from 'lucide-react'
@@ -11,7 +12,9 @@ export default function Navbar() {
 
   return (
     <nav className="h-16 px-6 flex items-center border-b border-x border-slate-200">
-      <Image src="/head.png" width={100} height={25} alt="Code Prep" draggable="false" />
+      <Link href="/me/dashboard">
+        <Image src="/head.png" width={100} height={25} alt="Code Prep" draggable="false" />
+      </Link>
       <DropdownMenu>
         <DropdownMenu.Trigger asChild>
           <Avatar className="ml-auto cursor-pointer">
@@ -37,9 +40,11 @@ export default function Navbar() {
           </DropdownMenu.Group>
           <DropdownMenu.Separator />
           <DropdownMenu.Group>
-            <DropdownMenu.Item disabled>
-              <Plus className="mr-2 h-4 w-4" />
-              <span>Playground</span>
+            <DropdownMenu.Item asChild>
+              <Link href="/me/playground">
+                <Plus className="mr-2 h-4 w-4" />
+                <span>Playground</span>
+              </Link>
             </DropdownMenu.Item>
             <DropdownMenu.Item disabled>
               <UserPlus className="mr-2 h-4 w-4" />
