@@ -6,8 +6,8 @@ export default async function MeLayout({ children }: { children: React.ReactNode
   return (
     <>
       <section className="border-b border-slate-200">
-        <nav className="mx-auto h-16 px-6 max-w-6xl grid grid-cols-2 items-center">
-          <Link href="/me/dashboard" className="justify-self-start">
+        <nav className="mx-auto h-16 px-6 max-w-6xl grid grid-cols-3 items-center">
+          <Link href="/me/dashboard" className="justify-self-start invisible sm:visible">
             <Image src="/head.png" width={100} height={25} alt="Code Prep" draggable="false" />
           </Link>
           <Navbar />
