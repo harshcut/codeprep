@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { useSession, signOut } from 'next-auth/react'
 import { LogOut, Settings, User, Plus, UserPlus } from 'lucide-react'
 import { Avatar, DropdownMenu } from 'ui'
@@ -11,13 +10,10 @@ export default function Navbar() {
   const email = session?.user?.email
 
   return (
-    <nav className="h-16 px-6 flex items-center border-b border-x border-slate-200">
-      <Link href="/me/dashboard">
-        <Image src="/head.png" width={100} height={25} alt="Code Prep" draggable="false" />
-      </Link>
+    <>
       <DropdownMenu>
         <DropdownMenu.Trigger asChild>
-          <Avatar className="ml-auto cursor-pointer">
+          <Avatar className="justify-self-end cursor-pointer">
             <Avatar.Image
               src={`https://source.boringavatars.com/bauhaus/120/${email}?colors=DACDAC,F39708,F85741,0E9094,1E1801`}
               draggable={false}
@@ -58,6 +54,6 @@ export default function Navbar() {
           </DropdownMenu.Item>
         </DropdownMenu.Content>
       </DropdownMenu>
-    </nav>
+    </>
   )
 }
