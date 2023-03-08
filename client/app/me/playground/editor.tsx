@@ -4,13 +4,40 @@ import * as React from 'react'
 import CodeMirror from '@uiw/react-codemirror'
 import { cpp } from '@codemirror/lang-cpp'
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels'
-import { GripHorizontal, Keyboard, Play } from 'lucide-react'
-import { Button, Tabs, Textarea, Select, Dialog, Label, Input } from 'ui'
+import { GripHorizontal, Keyboard, Loader2, Play } from 'lucide-react'
+import { Button, Tabs, Textarea, Select, Dialog, Label, Input, useToast } from 'ui'
+import { langData } from '@/utils'
 
 export default function Editor() {
+  const [loading, setLoading] = React.useState(false)
+  const [script, setScript] = React.useState('')
+  const [stdin, setStdin] = React.useState('')
+  const [language, setLanguage] = React.useState('')
+  const [stdout, setStdout] = React.useState('')
   const [optionOpen, setOptionOpen] = React.useState(false)
   const [theme, setTheme] = React.useState<'light' | 'dark'>('dark')
   const [fontSize, setFontSize] = React.useState(14)
+  const { setToast } = useToast()
+
+  const onCodeRun = React.useCallback(async () => {
+    setLoading(true)
+    const { data, error } = await fetch('/api/jdoodle', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ script, stdin, language }),
+    }).then((res) => res.json())
+    if (error) {
+      setToast({
+        title: 'Uh oh! Something went wrong.',
+        description: `${error}. Try again with correct parameters.`,
+        variant: 'destructive',
+      })
+      return setLoading(false)
+    }
+    setStdout(data)
+    return setLoading(false)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [script, stdin, language])
 
   return (
     <PanelGroup direction="vertical" className="max-w-6xl h-full mx-auto">
@@ -20,6 +47,7 @@ export default function Editor() {
           theme={theme}
           height="100%"
           style={{ height: '100%', fontSize }}
+          onChange={setScript}
         />
       </Panel>
       <PanelResizeHandle className="flex justify-center border border-slate-300 border-b-0 rounded-lg rounded-b-none">
@@ -84,31 +112,47 @@ export default function Editor() {
                   </Dialog.Footer>
                 </Dialog.Content>
               </Dialog>
-              <Select>
+              <Select onValueChange={setLanguage}>
                 <Select.Trigger className="w-[180px]">
                   <Select.Value placeholder="Select language" />
                 </Select.Trigger>
                 <Select.Content>
-                  <Select.Item value="java">Java</Select.Item>
-                  <Select.Item value="python2">Python 2</Select.Item>
-                  <Select.Item value="python3">Python 3</Select.Item>
-                  <Select.Item value="c">C</Select.Item>
-                  <Select.Item value="cpp14">C++ 14</Select.Item>
-                  <Select.Item value="cpp17">C++ 17</Select.Item>
-                  <Select.Item value="rust">Rust</Select.Item>
+                  {Object.keys(langData).map((key, idx) => (
+                    <Select.Item value={key} key={idx}>
+                      {langData[key].name}
+                    </Select.Item>
+                  ))}
                 </Select.Content>
               </Select>
-              <Button className="w-24 bg-green-600 hover:bg-green-700">
-                <Play className="mr-2 h-4 w-4" />
+              <Button
+                onClick={onCodeRun}
+                className="w-24 bg-green-600 hover:bg-green-700"
+                disabled={loading}
+              >
+                {loading ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <Play className="mr-2 h-4 w-4" />
+                )}
                 Run
               </Button>
             </div>
           </menu>
           <Tabs.Content value="input" className="border-none m-0 pt-4 pb-[88px] h-full">
-            <Textarea placeholder="stdin input..." className="resize-none h-full" />
+            <Textarea
+              value={stdin}
+              onChange={(e) => setStdin(e.target.value)}
+              placeholder="stdin input..."
+              className="resize-none h-full"
+            />
           </Tabs.Content>
           <Tabs.Content value="output" className="border-none m-0 pt-4 pb-[88px] h-full">
-            <Textarea placeholder="readonly output..." className="resize-none h-full" readOnly />
+            <Textarea
+              value={stdout}
+              placeholder="readonly output..."
+              readOnly
+              className="resize-none h-full"
+            />
           </Tabs.Content>
         </Tabs>
       </Panel>
