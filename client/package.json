@@ -23,7 +23,10 @@
     "react-hook-form": "^7.43.5",
     "react-resizable-panels": "^0.0.36",
     "tailwind-merge": "^1.10.0",
-    "ui": "*"
+    "ui": "*",
+    "y-codemirror.next": "^0.3.2",
+    "y-websocket": "^1.5.0",
+    "yjs": "^13.5.51"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
