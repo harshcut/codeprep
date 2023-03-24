@@ -61,7 +61,7 @@ export default function Navbar() {
         <DropdownMenu.Trigger asChild>
           <Avatar className="justify-self-end cursor-pointer">
             <Avatar.Image
-              src={`https://source.boringavatars.com/bauhaus/120/${email}?colors=DACDAC,F39708,F85741,0E9094,1E1801`}
+              src={`https://source.boringavatars.com/marble/120/${email}`}
               draggable={false}
             />
             <Avatar.Fallback>{email?.slice(0, 2).toUpperCase()}</Avatar.Fallback>
