@@ -6,24 +6,26 @@ import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels'
 import CodeMirror from '@uiw/react-codemirror'
 import { cpp } from '@codemirror/lang-cpp'
 import { GripHorizontal, GripVertical, Keyboard, Loader2, Play } from 'lucide-react'
-import { Button, Tabs, Textarea, Select, Dialog, Label, Input, useToast } from 'ui'
+import { Button, Tabs, Textarea, Select, Dialog, Label, Input, Toast, useToast } from 'ui'
 import * as Y from 'yjs'
 import { yCollab } from 'y-codemirror.next'
 import { WebsocketProvider } from 'y-websocket'
-import { langData } from '@/utils'
+import { supabase, langData } from '@/utils'
 import type { Extension } from '@codemirror/state'
+import type { RealtimeChannel } from '@supabase/supabase-js'
 
 export default function Resizable({ id }: { id: string }) {
   const { data: session } = useSession()
   const [loading, setLoading] = React.useState(false)
   const [script, setScript] = React.useState('')
   const [stdin, setStdin] = React.useState('')
-  const [language, setLanguage] = React.useState('')
+  const [language, setLanguage] = React.useState<string>()
   const [stdout, setStdout] = React.useState('')
   const [optionOpen, setOptionOpen] = React.useState(false)
   const [theme, setTheme] = React.useState<'light' | 'dark'>('dark')
   const [fontSize, setFontSize] = React.useState(14)
   const { setToast } = useToast()
+  const [channel, setChannel] = React.useState<RealtimeChannel>()
   const [extensions, setExtensions] = React.useState<Extension[]>([cpp()])
 
   React.useEffect(() => {
@@ -38,6 +40,27 @@ export default function Resizable({ id }: { id: string }) {
     return () => {
       provider.wsconnected && provider.destroy()
       doc.destroy()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  React.useEffect(() => {
+    const channel = supabase.channel(id, { config: { broadcast: { ack: true } } }).subscribe()
+    setChannel(channel)
+    channel.on('broadcast', { event: 'lang-update' }, ({ payload }) => {
+      setToast({
+        title: 'Language Updated on Remote',
+        description: `A user has changed its compiler language to ${langData[payload]?.name}.`,
+        action: (
+          <Toast.Action altText="Update" onClick={() => setLanguage(payload)}>
+            Update
+          </Toast.Action>
+        ),
+      })
+    })
+
+    return () => {
+      supabase.removeChannel(channel)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -145,7 +168,13 @@ export default function Resizable({ id }: { id: string }) {
                       </Dialog.Footer>
                     </Dialog.Content>
                   </Dialog>
-                  <Select onValueChange={setLanguage}>
+                  <Select
+                    value={language}
+                    onValueChange={async (payload) => {
+                      setLanguage(payload)
+                      await channel?.send({ type: 'broadcast', event: 'lang-update', payload })
+                    }}
+                  >
                     <Select.Trigger className="w-[180px]">
                       <Select.Value placeholder="Select language" />
                     </Select.Trigger>
