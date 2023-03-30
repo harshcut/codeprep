@@ -1,3 +1,5 @@
+const withMDX = require('@next/mdx')()
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -7,7 +9,8 @@ const nextConfig = {
   transpilePackages: ['ui'],
   experimental: {
     appDir: true,
+    mdxRs: true,
   },
 }
 
-module.exports = nextConfig
+module.exports = withMDX(nextConfig)

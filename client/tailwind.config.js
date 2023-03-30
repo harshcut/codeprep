@@ -7,6 +7,7 @@ module.exports = {
     './app/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
     '../ui/src/**/*.{js,ts,jsx,tsx}',
+    './mdx-components.tsx',
   ],
   theme: {
     extend: {
