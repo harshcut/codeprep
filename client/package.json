@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@codemirror/lang-cpp": "^6.0.2",
+    "@next/mdx": "^13.2.4",
     "@prisma/client": "^4.11.0",
+    "@supabase/supabase-js": "^2.12.1",
     "@uiw/codemirror-theme-xcode": "^4.19.9",
     "@uiw/react-codemirror": "^4.19.9",
     "bcrypt": "^5.1.0",
@@ -23,15 +25,20 @@
     "react-hook-form": "^7.43.5",
     "react-resizable-panels": "^0.0.36",
     "tailwind-merge": "^1.10.0",
-    "ui": "*"
+    "ui": "*",
+    "y-codemirror.next": "^0.3.2",
+    "y-websocket": "^1.5.0",
+    "yjs": "^13.5.51"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
+    "@types/mdx": "^2.0.4",
     "@types/node": "^18.14.6",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "autoprefixer": "^10.4.13",
     "dotenv-cli": "^7.0.0",
+    "encoding": "^0.1.13",
     "eslint": "^8.35.0",
     "eslint-config-next": "^13.2.3",
     "postcss": "^8.4.21",
