@@ -11,6 +11,7 @@ import * as Y from 'yjs'
 import { yCollab } from 'y-codemirror.next'
 import { WebsocketProvider } from 'y-websocket'
 import { supabase, langData, cn } from '@/utils'
+import { TwoSum, ValidAnagram } from '@/content'
 import type { Extension } from '@codemirror/state'
 import type { RealtimeChannel } from '@supabase/supabase-js'
 
@@ -111,8 +112,25 @@ export default function Resizable({ id }: { id: string }) {
 
   return (
     <PanelGroup direction="horizontal" className="h-full">
-      <Panel defaultSize={21} minSize={21} collapsible className="bg-blue-200" />
-      <PanelResizeHandle className="flex items-center">
+      <Panel defaultSize={21} minSize={21} collapsible>
+        <Tabs defaultValue="1" className="h-full flex flex-col">
+          <Tabs.List className="m-4">
+            <Tabs.Trigger value="1" className="min-w-max">
+              Q 1
+            </Tabs.Trigger>
+            <Tabs.Trigger value="2" className="min-w-max">
+              Q 2
+            </Tabs.Trigger>
+          </Tabs.List>
+          <Tabs.Content value="1" className="p-4 pt-0 m-0 border-none overflow-y-auto">
+            <TwoSum />
+          </Tabs.Content>
+          <Tabs.Content value="2" className="p-4 pt-0 m-0 border-none overflow-y-auto">
+            <ValidAnagram />
+          </Tabs.Content>
+        </Tabs>
+      </Panel>
+      <PanelResizeHandle className="flex items-center border-l border-slate-300">
         <GripVertical className="h-4 w-4" />
       </PanelResizeHandle>
       <Panel minSize={50}>
