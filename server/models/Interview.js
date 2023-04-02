@@ -21,8 +21,8 @@ const InterviewSchema = new mongoose.Schema({
     type : mongoose.Schema.Types.ObjectId,
     ref: 'question'
   },
-  duration:{
-    type: timestamps
+  endTime:{
+    type: Date
   },
   feedback12:{
     type: String
