@@ -26,6 +26,7 @@
     "react-resizable-panels": "^0.0.36",
     "tailwind-merge": "^1.10.0",
     "twilio": "^4.9.0",
+    "twilio-video": "^2.27.0",
     "ui": "*",
     "y-codemirror.next": "^0.3.2",
     "y-websocket": "^1.5.0",

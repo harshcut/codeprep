@@ -10,6 +10,7 @@ import { Button, Tabs, Textarea, Select, Dialog, Label, Input, Toast, useToast }
 import * as Y from 'yjs'
 import { yCollab } from 'y-codemirror.next'
 import { WebsocketProvider } from 'y-websocket'
+import * as Twilio from 'twilio-video'
 import { supabase, langData, cn } from '@/utils'
 import { TwoSum, ValidAnagram } from '@/content'
 import type { Extension } from '@codemirror/state'
@@ -35,7 +36,12 @@ export default function Resizable({ id }: { id: string }) {
   const [channel, setChannel] = React.useState<RealtimeChannel>()
   const [extensions, setExtensions] = React.useState<Extension[]>([cpp()])
   const [messages, setMessages] = React.useState<ChatMessage[]>([])
+  const [room, setRoom] = React.useState<Twilio.Room>()
   const chatEndRef = React.useRef<HTMLDivElement>(null)
+  const localVideoRef = React.useRef<HTMLVideoElement>(null)
+  const remoteVideoRef = React.useRef<HTMLVideoElement>(null)
+  const localAudioRef = React.useRef<HTMLAudioElement>(null)
+  const remoteAudioRef = React.useRef<HTMLAudioElement>(null)
 
   React.useEffect(() => {
     const wsUrl = process.env.NEXT_PUBLIC_YJS_WEBSOCKET_URL || 'ws://localhost:1234'
@@ -77,6 +83,51 @@ export default function Resizable({ id }: { id: string }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  React.useEffect(() => {
+    ;(async () => {
+      if (room) return
+      const { token, error } = await fetch('/api/video-token', {
+        method: 'POST',
+        body: JSON.stringify({ identity: session?.user?.email, room: id }),
+        headers: { 'Content-Type': 'application/json' },
+        next: { revalidate: 0 },
+      }).then((res) => res.json())
+      if (error) {
+        return setToast({
+          title: 'Uh oh! Something went wrong.',
+          description: `${error}. Try again later.`,
+          variant: 'destructive',
+        })
+      }
+      const _room = await Twilio.connect(token, { name: id })
+      setRoom(_room)
+      _room.localParticipant.tracks.forEach((publication) => {
+        if (publication.track.kind === 'video' && localVideoRef.current) {
+          publication.track.attach(localVideoRef.current)
+        } else if (publication.track.kind === 'audio' && localAudioRef.current) {
+          publication.track.attach(localAudioRef.current)
+        }
+      })
+      _room.on('trackSubscribed', (track) => {
+        if (track.kind === 'video' && remoteVideoRef.current) {
+          track.attach(remoteVideoRef.current)
+        } else if (track.kind === 'audio' && remoteAudioRef.current) {
+          track.attach(remoteAudioRef.current)
+        }
+      })
+      _room.on('participantDisconnected', (participant) => {
+        participant.removeAllListeners()
+      })
+    })()
+
+    return () => {
+      if (room?.state === 'connected') {
+        room.disconnect()
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [room])
 
   const onCodeRun = React.useCallback(async () => {
     setLoading(true)
@@ -267,7 +318,19 @@ export default function Resizable({ id }: { id: string }) {
       </PanelResizeHandle>
       <Panel defaultSize={21} minSize={21} collapsible>
         <PanelGroup direction="vertical">
-          <Panel minSize={30} className="bg-red-200" />
+          <Panel
+            minSize={30}
+            className="relative bg-black rounded-b-lg border-l border-b border-slate-300"
+          >
+            <div className="h-full">
+              <video ref={remoteVideoRef} className="relative h-full w-full object-cover" />
+              <audio ref={remoteAudioRef} />
+            </div>
+            <div className="absolute w-[40%] max-w-[260px] bottom-8 right-8 rounded-lg overflow-hidden drop-shadow-md">
+              <video ref={localVideoRef} className="scale-x-[-1]" />
+              <audio ref={localAudioRef} />
+            </div>
+          </Panel>
           <PanelResizeHandle className="flex justify-center border border-slate-300 border-b-0 rounded-lg rounded-b-none">
             <GripHorizontal className="h-4 w-4" />
           </PanelResizeHandle>
