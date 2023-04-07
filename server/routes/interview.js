@@ -32,4 +32,5 @@ router.post('/slot',auth, async(req, res)=>{
 })
 
 
+
 module.exports = router;
