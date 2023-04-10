@@ -12,17 +12,29 @@ const auth = require('../middleware/auth')
 router.post('/slot',auth, async(req, res)=>{
   try {
     let user = await User.findById(req.user.id).select('-password');
-    // const profile = await Profile.findOne({
-    //   user : req.user.id
-    // }).populate('user')
+    const profile = await Profile.findOne({
+      user : req.user.id
+    }).populate('user')
 
+    let slot = await Slot.findOne({date :req.body.date})
+
+    if(!slot){
     const newSlot = Slot({
-      date : req.body.date,
-      user : req.user.id,
-      type : req.body.type
-    })
-    const slot = await newSlot.save();
-    res.status(200).json(slot);
+          date : req.body.date,
+          profiles : [
+            {profile:profile}
+          ]
+        })
+      const slot = await newSlot.save();
+      res.status(200).json(slot);
+    }
+    else{
+      //update profile array
+      slot.profiles.unshift({profile : profile})
+      await slot.save();
+      res.status(200).json(slot);
+    }
+  
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error')

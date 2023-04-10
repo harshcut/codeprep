@@ -19,6 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 //Defining Routes
 app.use('/api/auth', require('./routes/Auth'))
 app.use('/api/interview', require('./routes/Interview'))
+app.use('/api/profile', require('./routes/Profile'))
 
 
 

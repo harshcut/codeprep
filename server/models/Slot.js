@@ -5,14 +5,14 @@ const SlotSchema = new mongoose.Schema({
     type : Date,
     required : true
   },
-  user:{
+  profiles:[
+  {
+    profile : {
     type : mongoose.Schema.Types.ObjectId,
-    ref: 'user'
-  },
-  type :{
-    type : 'String',
-    required: true
+    ref: 'profile'
   }
+}
+]
 },
 {timestamps : true}
 );

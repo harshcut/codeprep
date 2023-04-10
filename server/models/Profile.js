@@ -35,6 +35,9 @@ const ProfileSchema = new mongoose.Schema({
     type: Number,
     required:true
   },
+  language:[
+    { type: String},
+  ],
   role:{
     type: String,
     required:true
