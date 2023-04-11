@@ -43,6 +43,24 @@ router.post('/slot',auth, async(req, res)=>{
 
 })
 
+//@route      GET api/interview/problem/:id
+//@desc       get problem by _id
+//@access     Public
+router.post('/problem/:id', async(req, res)=>{
+  try {
+    const problem = await Questions.findById(req.params.id)
 
+  if(!problem){
+    return res.status(404).send("Problem not found");
+  }
+  res.status(200).json(problem);
+  } catch (err) {
+    if (err.kind==='ObjectId') 
+      return res.status(404).send("Problem not found");
+    console.error(err.message);
+    res.status(500).send('Server error!!');
+
+  }
+});
 
 module.exports = router;

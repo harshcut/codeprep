@@ -26,7 +26,7 @@ app.use('/api/profile', require('./routes/Profile'))
 app.get('/', (req, res)=>{
   res.json({message : 'running....!'})
 })
-console.log(Date.now())
+
 
 app.listen(port, ()=>{
     console.log('app running on port 8000..')
