@@ -11,7 +11,7 @@ const Interview = require('../models/Interview');
 const Question =  require('../models/Question')
 
 
-
+const sgMail = require('@sendgrid/mail')
 
 
 
@@ -77,7 +77,25 @@ const scheduleInterview = async(profile1, profile2,time) =>{
     question2 : q2
   })
 
-  // const interview = await newInterview.save();
+  const interview = await newInterview.save();
+
+  const msg1 = {
+  to: user1.email,
+  from: process.env.SENDGRID,
+  subject: 'Codeprep - Interview session link',
+  text: 'some link..',
+  html: '<strong>click here</strong>',
+};
+const msg2 = {
+  to: user2.email,
+  from: process.env.SENDGRID,
+  subject: 'Codeprep - Interview session link',
+  text: 'some link..',
+  html: '<strong>click here</strong>',
+};
+sgMail.send(msg1);
+sgMail.send(msg2);
+
   console.log('Interview scheduled')
 }
 
