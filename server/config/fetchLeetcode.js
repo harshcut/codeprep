@@ -27,3 +27,6 @@ for(let i=0; i<ques.length; i++){
 }
 
 }
+//session -> link ? domain/xyz 
+
+1 2

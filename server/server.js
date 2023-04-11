@@ -35,7 +35,3 @@ app.get('/', (req, res)=>{
   res.json({message : 'running....!'})
 })
 
-
-app.listen(port, ()=>{
-    console.log('app running on port 8000..')
-})

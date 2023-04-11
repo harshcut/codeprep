@@ -46,7 +46,7 @@ router.post('/slot',auth, async(req, res)=>{
 //@route      GET api/interview/problem/:id
 //@desc       get problem by _id
 //@access     Public
-router.post('/problem/:id', async(req, res)=>{
+router.get('/problem/:id', async(req, res)=>{
   try {
     const problem = await Questions.findById(req.params.id)
 
