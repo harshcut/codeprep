@@ -16,7 +16,7 @@ const sgMail = require('@sendgrid/mail')
 
 
 const matchUsers =  () =>{
-console.log('matching users...')
+// console.log('matching users...')
 //schedule interviews one hour ahead
 let cur_time = new Date();
 cur_time.setHours(cur_time.getHours()+1);
@@ -96,7 +96,7 @@ const msg2 = {
 sgMail.send(msg1);
 sgMail.send(msg2);
 
-  console.log('Interview scheduled')
+  // console.log('Interview scheduled')
 }
 
 

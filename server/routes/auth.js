@@ -16,7 +16,7 @@ router.get('/', auth, async(req,res)=>{
                 select('-password');
     res.json(user);
   } catch (err) {
-    console.log(err.message);
+    // console.log(err.message);
     res.status(500).send('Server error');
     
   }
@@ -67,7 +67,7 @@ router.post('/login', [
 
 
   } catch (err) {
-    console.error(err.message);
+    // console.error(err.message);
     res.status(500).send('Server error')
   }
 });
@@ -122,7 +122,7 @@ return res.status(400).json({errors: errors.array()})
         });
       // res.send('User Registered');
     }catch(err){
-      console.error(err.message);
+      // console.error(err.message);
       res.status(500).send('Server error')
     }
 

@@ -8,7 +8,7 @@ const ques = problems.questions
 
 for(let i=0; i<ques.length; i++){
   const problem =  await lc.problem(ques[i].titleSlug)
-  console.log(i+1)
+  // console.log(i+1)
 
   let {title,titleSlug,content,difficulty,sampleTestCase,codeSnippets,hints} = problem;
 

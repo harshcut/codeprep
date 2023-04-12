@@ -4,8 +4,8 @@
   "private": true,
   "workspaces": [
     "client",
-    "ui",
-    "server"
+    "server",
+    "ui"
   ],
   "scripts": {
     "build": "turbo run build --no-daemon",

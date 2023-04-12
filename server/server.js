@@ -8,7 +8,7 @@ const expressWs = require('express-ws')
 
 
 require('dotenv').config()
-const port =  8000
+const port = process.env.PORT || 8000
 const { app } = expressWs(express())
 
 
@@ -35,3 +35,6 @@ app.get('/', (req, res)=>{
   res.json({message : 'running....!'})
 })
 
+app.listen(port, () => {
+  console.info(`ready - started express server on http://localhost:${port}`)
+})

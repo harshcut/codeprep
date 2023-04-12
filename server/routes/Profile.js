@@ -20,7 +20,7 @@ router.get('/me',auth,async (req,res) => {
     }
     res.json(profile);
   }catch(err){
-    console.error(err.message);
+    // console.error(err.message);
     res.status(500).send('Server Error')
   }
 });
@@ -32,7 +32,7 @@ router.get("/",async(req,res) => {
     const profiles = await Profile.find().populate('user');
     res.json(profiles);
   } catch (err) {
-    console.error(err.message);
+    // console.error(err.message);
     res.status(500).send('Server error!')
     
   }
@@ -44,7 +44,7 @@ router.get("/",async(req,res) => {
 //@access   Public
 router.get('/user/:user_id', async (req, res) => {
   try {
-    console.log("im hit dude2")
+    // console.log("im hit dude2")
     const profile = await Profile.findOne(
         {user: req.params.user_id}
       ).populate('user');
@@ -54,7 +54,7 @@ router.get('/user/:user_id', async (req, res) => {
     }
     res.json(profile);
   } catch (err) {
-    console.error(err.message);
+    // console.error(err.message);
     if(err.kind == 'ObjectId')
       return res.status(400).json({ msg: "Profile not found" });
       else
@@ -118,7 +118,7 @@ if(!errors.isEmpty()){
         res.json(profile)
 
     }catch(err){
-      console.error(err.message);
+      // console.error(err.message);
       res.status(500).send('Server error!')
     }
 });

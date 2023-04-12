@@ -36,7 +36,7 @@ router.post('/slot',auth, async(req, res)=>{
     }
   
   } catch (err) {
-    console.error(err.message);
+    // console.error(err.message);
     res.status(500).send('Server error')
   }
   
@@ -57,7 +57,7 @@ router.get('/problem/:id', async(req, res)=>{
   } catch (err) {
     if (err.kind==='ObjectId') 
       return res.status(404).send("Problem not found");
-    console.error(err.message);
+    // console.error(err.message);
     res.status(500).send('Server error!!');
 
   }
