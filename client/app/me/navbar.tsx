@@ -4,7 +4,7 @@ import * as React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useSession, signOut } from 'next-auth/react'
-import { LogOut, Settings, User, Plus, UserPlus, Home } from 'lucide-react'
+import { LogOut, Settings, User, Plus, Home, Calendar } from 'lucide-react'
 import { Avatar, DropdownMenu, Command, Button } from 'ui'
 
 export default function Navbar() {
@@ -50,6 +50,10 @@ export default function Navbar() {
               <Home className="mr-2 h-4 w-4" />
               <span>Dashboard</span>
             </Command.Item>
+            <Command.Item onSelect={() => runCommand(() => router.push('/me/schedule'))}>
+              <Calendar className="mr-2 h-4 w-4" />
+              <span>Schedule Meet</span>
+            </Command.Item>
             <Command.Item onSelect={() => runCommand(() => router.push('/me/playground'))}>
               <Plus className="mr-2 h-4 w-4" />
               <span>Playground</span>
@@ -86,13 +90,13 @@ export default function Navbar() {
               <Home className="mr-2 h-4 w-4" />
               <span>Dashboard</span>
             </DropdownMenu.Item>
+            <DropdownMenu.Item onSelect={() => router.push('/me/schedule')}>
+              <Calendar className="mr-2 h-4 w-4" />
+              <span>Schedule Meet</span>
+            </DropdownMenu.Item>
             <DropdownMenu.Item onSelect={() => router.push('/me/playground')}>
               <Plus className="mr-2 h-4 w-4" />
               <span>Playground</span>
-            </DropdownMenu.Item>
-            <DropdownMenu.Item disabled>
-              <UserPlus className="mr-2 h-4 w-4" />
-              <span>Invite users</span>
             </DropdownMenu.Item>
           </DropdownMenu.Group>
           <DropdownMenu.Separator />
