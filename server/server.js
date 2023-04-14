@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 const bodyParser = require('body-parser')
 const connectDB = require('./config/db')
 const cron = require('./config/cron')
@@ -8,7 +9,7 @@ const expressWs = require('express-ws')
 
 
 require('dotenv').config()
-const port = process.env.PORT || 8000
+const port = process.env.HTTP_PORT || 8000
 const { app } = expressWs(express())
 
 
@@ -20,6 +21,7 @@ cron();
 //Init Middleware
 app.use(express.json({ extended: false }));
 app.use(express.urlencoded({ extended: true }));
+app.use(cors({ origin: process.env.CORS_ORIGIN ?? '*' }))
 
 //Defining Routes
 app.ws('/collaboration/:document', (ws, req) => {
