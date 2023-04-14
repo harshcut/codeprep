@@ -1,5 +1,6 @@
 'use client'
 
+export { default as AlertDialog } from './alert-dialog'
 export { default as Avatar } from './avatar'
 export { default as Button } from './button'
 export { default as Command } from './command'
