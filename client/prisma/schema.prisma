@@ -13,4 +13,13 @@ model User {
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  slotIDs   String[] @db.ObjectId
+  slots     Slot[]   @relation(fields: [slotIDs], references: [id])
+}
+
+model Slot {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  timestamp DateTime @unique
+  userIDs   String[] @db.ObjectId
+  users     User[]   @relation(fields: [userIDs], references: [id])
 }
