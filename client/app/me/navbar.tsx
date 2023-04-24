@@ -1,7 +1,6 @@
 'use client'
 
 import * as React from 'react'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useSession, signOut } from 'next-auth/react'
 import { LogOut, Settings, User, Plus, Home, Calendar } from 'lucide-react'
@@ -46,6 +45,10 @@ export default function Navbar() {
         <Command.List>
           <Command.Empty>No results found.</Command.Empty>
           <Command.Group heading="Suggestions">
+            <Command.Item onSelect={() => runCommand(() => router.push('/me/profile'))}>
+              <User className="mr-2 h-4 w-4" />
+              <span>Profile</span>
+            </Command.Item>
             <Command.Item onSelect={() => runCommand(() => router.push('/me/dashboard'))}>
               <Home className="mr-2 h-4 w-4" />
               <span>Dashboard</span>
@@ -75,7 +78,7 @@ export default function Navbar() {
           <DropdownMenu.Label>My Account</DropdownMenu.Label>
           <DropdownMenu.Separator />
           <DropdownMenu.Group>
-            <DropdownMenu.Item disabled>
+            <DropdownMenu.Item onSelect={() => router.push('/me/profile')}>
               <User className="mr-2 h-4 w-4" />
               <span>Profile</span>
             </DropdownMenu.Item>

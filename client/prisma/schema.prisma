@@ -15,6 +15,7 @@ model User {
   updatedAt DateTime @updatedAt
   slotIDs   String[] @db.ObjectId
   slots     Slot[]   @relation(fields: [slotIDs], references: [id])
+  profile   Profile?
 }
 
 model Slot {
@@ -22,4 +23,13 @@ model Slot {
   timestamp DateTime @unique
   userIDs   String[] @db.ObjectId
   users     User[]   @relation(fields: [userIDs], references: [id])
+}
+
+type Profile {
+  name      String?
+  bio       String?
+  location  String?
+  candidate String?
+  yoe       Int?
+  languages String[]
 }
