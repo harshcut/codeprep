@@ -61,6 +61,10 @@ export default function Navbar() {
               <Plus className="mr-2 h-4 w-4" />
               <span>Playground</span>
             </Command.Item>
+            <Command.Item onSelect={() => runCommand(() => router.push('/me/settings'))}>
+              <Settings className="mr-2 h-4 w-4" />
+              <span>Settings</span>
+            </Command.Item>
           </Command.Group>
         </Command.List>
       </Command.Dialog>
@@ -82,7 +86,7 @@ export default function Navbar() {
               <User className="mr-2 h-4 w-4" />
               <span>Profile</span>
             </DropdownMenu.Item>
-            <DropdownMenu.Item disabled>
+            <DropdownMenu.Item onSelect={() => router.push('/me/settings')}>
               <Settings className="mr-2 h-4 w-4" />
               <span>Settings</span>
             </DropdownMenu.Item>

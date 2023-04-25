@@ -1,12 +1,14 @@
 'use client'
 
 import * as React from 'react'
+import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { Avatar, Button } from 'ui'
 import { Globe, Mail } from 'lucide-react'
 
 export default function DetailsPane() {
   const { data: session } = useSession()
+  const router = useRouter()
   const [data, setData] = React.useState<Record<string, any>>()
   const email = session?.user?.email
 
@@ -33,7 +35,9 @@ export default function DetailsPane() {
         <h1 className="text-2xl font-semibold tracking-tight mt-4 mb-2">{data.name}</h1>
       )}
       {data?.bio && <p>{data.bio}</p>}
-      <Button className="w-full my-6">Edit Profile</Button>
+      <Button className="w-full my-6" onClick={() => router.push('/me/settings')}>
+        Edit Profile
+      </Button>
       <div className="flex flex-col gap-2">
         {data?.location && (
           <p className="flex items-center text-sm">

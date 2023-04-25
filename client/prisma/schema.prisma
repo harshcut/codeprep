@@ -26,10 +26,8 @@ model Slot {
 }
 
 type Profile {
-  name      String?
-  bio       String?
-  location  String?
-  candidate String?
-  yoe       Int?
-  languages String[]
+  name     String?
+  bio      String?
+  location String?
+  yoe      Int?
 }

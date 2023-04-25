@@ -63,7 +63,7 @@ export default function ScheduleForm() {
           className="border-none p-0 m-0 grid grid-cols-6 gap-4"
         >
           {Array.from({ length: 24 }, (_, i) => day.clone().add(i, 'hours')).map((hour, idx) => {
-            const ended = hour.isBefore(moment().add(15, 'minutes'))
+            const ended = hour.isBefore(moment().add(75, 'minutes'))
             const booked = slots.includes(hour.toISOString())
 
             return (
